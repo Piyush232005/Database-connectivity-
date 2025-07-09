@@ -28,7 +28,7 @@ app.get("/notes", async (req, res) => {
     });
 });
 
-
+// delete the notes
 app.delete("/notes/:id", async (req, res) => {
     const noteId = req.params.id;
     await noteModel.findByIdAndDelete({
@@ -39,6 +39,22 @@ app.delete("/notes/:id", async (req, res) => {
         message: 'Note deleted successfully'
     })
 })
+
+// updater the notes 
+app.patch("/notes/:id", async (req, res) => {
+    const noteId = req.params.id;
+    const { title} = req.body;
+
+    await noteModel.findByIdAndUpdate({
+        _id: noteId
+    },{
+        title:title
+    })
+
+    res.json({
+        message: 'Note updated successfully'
+    })
+});
 // ✅ Removed the incomplete line: app.
 
 app.listen(3000, () => {
